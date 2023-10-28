@@ -1,0 +1,114 @@
+package test1008;
+
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.Random;
+
+public class Start1124 extends JFrame implements KeyListener, ActionListener {
+    private int playerX = 50;
+    private int playerY = 50;
+    private int enemyX, enemyY;
+    private Timer timer;
+    private boolean gameOver = false;
+
+    public Start1124() {
+        setTitle("Game");
+        setSize(800, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+        addKeyListener(this);
+        setFocusable(true);
+
+        timer = new Timer(100, this);
+        timer.start();
+
+        spawnEnemy();
+        setVisible(true);
+    }
+
+    public void paint(Graphics g) {
+        super.paint(g);
+        if (!gameOver) {
+            g.setColor(Color.RED);
+            g.fillRect(playerX, playerY, 50, 50); // 플레이어 캐릭터 그리기
+
+            g.setColor(Color.BLUE);
+            g.fillRect(enemyX, enemyY, 50, 50); // 적 캐릭터 그리기
+        } else {
+            g.setColor(Color.BLACK);
+            g.setFont(new Font("Arial", Font.BOLD, 48));
+            g.drawString("Game Over", 300, 300);
+        }
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (!gameOver) {
+            moveEnemyRandomly();
+            checkCollision();
+            repaint();
+        }
+    }
+
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        if (keyCode == KeyEvent.VK_W) {
+            playerY -= 10;
+        } else if (keyCode == KeyEvent.VK_S) {
+            playerY += 10;
+        } else if (keyCode == KeyEvent.VK_A) {
+            playerX -= 10;
+        } else if (keyCode == KeyEvent.VK_D) {
+            playerX += 10;
+        }
+        repaint();
+    }
+
+    public void keyTyped(KeyEvent e) {
+    }
+
+    public void keyReleased(KeyEvent e) {
+    }
+
+    private void spawnEnemy() {
+        Random random = new Random();
+        enemyX = random.nextInt(700);
+        enemyY = random.nextInt(500);
+    }
+
+    private void moveEnemyRandomly() {
+        Random random = new Random();
+        int direction = random.nextInt(4);
+        switch (direction) {
+            case 0: // 위
+                enemyY -= 10;
+                break;
+            case 1: // 아래
+                enemyY += 10;
+                break;
+            case 2: // 왼쪽
+                enemyX -= 10;
+                break;
+            case 3: // 오른쪽
+                enemyX += 10;
+                break;
+        }
+    }
+
+    private void checkCollision() {
+        Rectangle playerRect = new Rectangle(playerX, playerY, 50, 50);
+        Rectangle enemyRect = new Rectangle(enemyX, enemyY, 50, 50);
+        if (playerRect.intersects(enemyRect)) {
+            gameOver = true;
+            timer.stop();
+        }
+    }
+
+    public static void main(String[] args) {
+        new Start1124();
+    }
+}
