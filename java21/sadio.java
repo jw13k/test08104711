@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class WalkingTimeCalculator {
+public class WalkTCal {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
