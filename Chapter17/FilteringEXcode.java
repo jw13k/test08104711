@@ -6,10 +6,10 @@ import java.util.List;
 public class FilteringEXcode {
 
 	public static void main(String[] args) {
-		List<Integer>numbers = Arrays.asList(1,2,3,4,5); //ÇÊÅÍ¸µÀ» ÅëÇØ Â¦¼ö¸¸ °É·¯³»±â
+		List<Integer>numbers = Arrays.asList(1,2,3,4,5); //í•„í„°ë§ì„ í†µí•´ ì§ìˆ˜ë§Œ ê±¸ëŸ¬ë‚´ê¸°
 		numbers.stream()
 				.filter(num -> num % 2 == 0)
 				.forEach(System.out::println);
 	}
-
+//20240510
 }
